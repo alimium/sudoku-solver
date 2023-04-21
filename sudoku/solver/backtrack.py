@@ -1,10 +1,10 @@
-import os
-from colorama import Fore
-from typing import Dict, Union, List
-from sudoku.solver.solver import SudokuSolver, SelectionMethod
+from solver import SudokuSolver, SelectionMethod
 from sudoku.game import Sudoku
-import random
-import time
+
+import os, random, time
+from typing import Dict, Union, List
+
+from colorama import Fore
 
 
 class BackTrackSolver(SudokuSolver):

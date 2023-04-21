@@ -1,7 +1,9 @@
 from sudoku.game.sudoku import Sudoku
 from typing import List, Dict
+
 import copy
 from enum import Enum
+
 from colorama import Fore
 
 

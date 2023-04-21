@@ -1,7 +1,9 @@
-import os
-import numpy as np
-from sudoku import Sudoku
 from sudoku.solver import BackTrackSolver, SelectionMethod
+from sudoku import Sudoku
+
+import os
+
+import numpy as np
 from colorama import Fore
 
 
