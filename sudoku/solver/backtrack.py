@@ -9,11 +9,60 @@ import time
 
 class BackTrackSolver(SudokuSolver):
     def __init__(self, game: Sudoku = None, log=True) -> None:
+        """
+        Creates a solver object for the game.
+
+        Parameters
+        ----------
+        game : Sudoku, optional
+            The game to solve, by default None
+        log : bool, optional
+            Whether to log the solver steps, by default True
+        """
         super().__init__(game, log)
 
     def solve(
         self, step_by_step=False, selection=SelectionMethod.ROW
     ) -> Dict[str, Union[Sudoku, List[Sudoku], int, int, int]]:
+        """
+        Solves the game by backtracking algorithm. At each step, the algorithm will choose a number within valid possibilities for that cell.
+
+        Parameters
+        ----------
+        step_by_step : bool, optional
+            If True, the game will be printed after each step, by default False
+
+        selection : SelectionMethod, optional
+            The selection method to use, by default SelectionMethod.MOST_CONSTRAINED
+
+            Possible options are:
+                SelectionMethod.ROW: Selects elements from left to right, top to bottom
+                SelectionMethod.COLUMN: Selects elements from top to bottom, left to right
+                SelectionMethod.GRID: Selects elements from right to left, top to bottom but within the same grid. Grids are selected from left to right, top to bottom
+                SelectionMethod.RANDOM: Selects elements randomly
+                SelectionMethod.LEAST_CONSTRAINED: Selects elements with the most number of possibilities
+                SelectionMethod.MOST_CONSTRAINED: Selects elements with the least number of possibilities
+
+
+        Returns
+        -------
+        Dict[str, Union[Sudoku, List[Sudoku], int, int, int]]
+            A dictionary containing the following keys:
+                solved: The solved game, if it was solved, None otherwise
+                original: The original game
+                time: The time it took to solve the game
+                steps: The number of steps it took to solve the game
+                backtracks: The number of backtracks it took to solve the game
+
+        Notes
+        -----
+        The game will be solved using the selection method
+        specified in the selection parameter,
+        which has significant effect in solver performance.
+        Random selection is the slowest.
+        Most constrained selection is the fastest.
+        """
+
         os.system("cls" if os.name == "nt" else "clear")
         solved = None
         if self.game is None:
@@ -84,6 +133,16 @@ class BackTrackSolver(SudokuSolver):
         return None
 
     def display_step_by_step(self, manual=False) -> None:
+        """
+        Prints the steps of the solver.
+
+        **This method will only work if the game is already solved. Make sure to call the solve method first**
+
+        Parameters
+        ----------
+        manual : bool, optional
+            If True, the user will have to manually press a key to continue to the next step, by default False
+        """
         for i in self.solve_history:
             os.system("cls" if os.name == "nt" else "clear")
             print(i)
