@@ -7,7 +7,19 @@ from colorama import Fore
 
 class Sudoku:
     def __init__(self, arr: Union[List, np.array] = None) -> None:
-        self.size: int = arr.shape[0]
+        """
+        Create a Sudoku object from a list or numpy array
+
+        Parameters
+        ----------
+        arr : Union[List, np.array], optional
+            The array to create the Sudoku object from, by default None
+
+        Notes
+        -----
+        The array must be a square array with a size that is a perfect square. For example, a 9x9 array is valid, but 9x8 and 10x10 arrays are not. If the array is not provided, an empty 9x9 Sudoku board will be created.
+        """
+        self.size: int = arr.shape[0] if arr is not None else 9
         self.grid_size: int = int(np.sqrt(self.size))
         self.array_board: np.ndarray = (
             np.zeros((self.size, self.size), dtype=int)
@@ -66,6 +78,9 @@ class Sudoku:
         return out
 
     def draw(self) -> None:
+        """
+        Draw the Sudoku board using PySimpleGUI
+        """
         # 0 represents an empty cell
         # get the size of the board
         board = self.array_board
@@ -116,6 +131,28 @@ class Sudoku:
         window.close()
 
     def validate(self, ignore_empty_cells=False, detail=False) -> Dict[str, List[bool]]:
+        """
+        Validate the Sudoku board
+
+        Parameters
+        ----------
+        ignore_empty_cells : bool, optional
+            Whether to ignore empty cells, by default False
+        detail : bool, optional
+            Whether to return the details of the validation, by default False
+
+        Returns
+        -------
+        Dict[str, List[bool]]
+            A dictionary containing the validation results for rows, columns and grids
+
+        Notes
+        -----
+        If `ignore_empty_cells` is set to `True`, the validation will ignore empty cells. This is useful when validating a partially filled Sudoku board.
+
+        If `detail` is set to `False`, the function will only check for duplicates and ignore the number of occurence of each number in rows, columns and grids.
+        """
+
         row_details = {}
         column_details = {}
         grid_details = {}
@@ -171,7 +208,22 @@ class Sudoku:
                 ],
             }
 
-    def possible_values(self, row, column):
+    def possible_values(self, row, column) -> List[int]:
+        """
+        Get the possible values for a cell
+
+        Parameters
+        ----------
+        row : int
+            The row number of the cell
+        column : int
+            The column number of the cell
+
+        Returns
+        -------
+        List[int]
+            A list of possible values for the cell
+        """
         # get the possible values for a cell
         # get the values in the row
         validity = self.validate(ignore_empty_cells=True, detail=True)
@@ -190,5 +242,20 @@ class Sudoku:
         return list(set(row_values) & set(column_values) & set(grid_values))
 
     def get_grid(self, row, column):
-        # get the grid number for a cell
+        """
+        Get the grid number for a cell
+
+        Parameters
+        ----------
+        row : int
+            The row number of the cell
+        column : int
+            The column number of the cell
+
+        Returns
+        -------
+        int
+            The grid number of the cell
+        """
+
         return (row // self.grid_size) * self.grid_size + (column // self.grid_size)
