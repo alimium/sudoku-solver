@@ -1,1 +1,1 @@
-from sudoku.game.sudoku import Sudoku
+from sudoku.game.sudoku import SudokuGame

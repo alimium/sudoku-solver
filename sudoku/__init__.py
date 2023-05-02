@@ -1,2 +1,2 @@
-from sudoku.game import Sudoku
+from sudoku.game import SudokuGame
 from sudoku import solver

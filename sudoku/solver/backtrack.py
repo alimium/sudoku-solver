@@ -1,5 +1,5 @@
-from solver import SudokuSolver, SelectionMethod
-from sudoku.game import Sudoku
+from sudoku.solver.solver import SudokuSolver, SelectionMethod
+from sudoku.game import SudokuGame
 
 import os, random, time
 from typing import Dict, Union, List
@@ -8,7 +8,7 @@ from colorama import Fore
 
 
 class BackTrackSolver(SudokuSolver):
-    def __init__(self, game: Sudoku = None, log=True) -> None:
+    def __init__(self, game: SudokuGame = None, log=True) -> None:
         """
         Creates a solver object for the game.
 
@@ -23,7 +23,7 @@ class BackTrackSolver(SudokuSolver):
 
     def solve(
         self, step_by_step=False, selection=SelectionMethod.ROW
-    ) -> Dict[str, Union[Sudoku, List[Sudoku], int, int, int]]:
+    ) -> Dict[str, Union[SudokuGame, List[SudokuGame], int, int, int]]:
         """
         Solves the game by backtracking algorithm. At each step, the algorithm will choose a number within valid possibilities for that cell.
 
@@ -103,7 +103,7 @@ class BackTrackSolver(SudokuSolver):
 
     def _solve(
         self, game, step_by_step=False, selection=SelectionMethod.ROW
-    ) -> Union[Sudoku, None]:
+    ) -> Union[SudokuGame, None]:
         next_empty = self._get_next_empty(game, method=selection)
 
         if next_empty is None:
@@ -117,7 +117,7 @@ class BackTrackSolver(SudokuSolver):
                 self.log(f"Steps: {self._steps} | Backtracks: {self._backtracks}")
 
             game.array_board[row, col] = i
-            g_cpy = Sudoku(game.array_board)
+            g_cpy = SudokuGame(game.array_board)
             g_cpy.constants = self.original_game.constants
             if step_by_step:
                 os.system("cls" if os.name == "nt" else "clear")

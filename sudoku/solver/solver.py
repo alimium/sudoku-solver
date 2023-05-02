@@ -1,4 +1,4 @@
-from sudoku.game.sudoku import Sudoku
+from sudoku.game.sudoku import SudokuGame
 from typing import List, Dict
 
 import copy
@@ -17,10 +17,10 @@ class SelectionMethod(Enum):
 
 
 class SudokuSolver:
-    def __init__(self, game: Sudoku = None, log=True) -> None:
-        self.original_game: Sudoku = game
-        self.game: Sudoku = copy.deepcopy(self.original_game)
-        self.solve_history: List[Sudoku] = [self.original_game]
+    def __init__(self, game: SudokuGame = None, log=True) -> None:
+        self.original_game: SudokuGame = game
+        self.game: SudokuGame = copy.deepcopy(self.original_game)
+        self.solve_history: List[SudokuGame] = [self.original_game]
         self._log: bool = log
         self._steps: int = 0
         self._time: int = 0
@@ -42,7 +42,9 @@ class SudokuSolver:
 
         return res
 
-    def _constraint_check(self, game: Sudoku) -> Dict[str, Dict[int, Dict[int, int]]]:
+    def _constraint_check(
+        self, game: SudokuGame
+    ) -> Dict[str, Dict[int, Dict[int, int]]]:
         board_check = game.validate(ignore_empty_cells=True)
         rows = board_check["rows"]
         columns = board_check["columns"]

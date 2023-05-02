@@ -6,7 +6,7 @@ import PySimpleGUI as sg
 from colorama import Fore
 
 
-class Sudoku:
+class SudokuGame:
     def __init__(self, arr: Union[List, np.array] = None) -> None:
         """
         Create a Sudoku object from a list or numpy array

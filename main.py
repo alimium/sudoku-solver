@@ -1,5 +1,5 @@
 from sudoku.solver import BackTrackSolver, SelectionMethod
-from sudoku import Sudoku
+from sudoku import SudokuGame
 
 import os
 
@@ -37,16 +37,30 @@ def main():
         ]
     )
 
-    sdk = arto_inkala
+    david_filmer = np.array(
+        [
+            [0, 0, 9, 0, 0, 0, 1, 0, 0],
+            [0, 0, 0, 0, 0, 6, 0, 3, 0],
+            [0, 0, 0, 8, 0, 0, 0, 0, 2],
+            [0, 8, 0, 0, 0, 4, 0, 0, 0],
+            [0, 0, 0, 0, 7, 0, 5, 0, 0],
+            [6, 0, 0, 9, 0, 0, 0, 0, 0],
+            [0, 0, 7, 0, 1, 0, 9, 0, 0],
+            [0, 4, 0, 0, 0, 3, 0, 0, 8],
+            [0, 0, 0, 2, 0, 0, 0, 6, 0],
+        ]
+    )
+
+    sdk = david_filmer
 
     # uncomment next line for custom input
     # sdk = parse_input()
 
-    game = Sudoku(sdk)
-    solver = BackTrackSolver(game)
-
-    result = solver.solve(
-        step_by_step=False, selection=SelectionMethod.MOST_CONSTRAINED
+    game = SudokuGame(sdk)
+    bt_solver = BackTrackSolver(game)
+    # gt_solver = GeneticSolver(game)
+    result = bt_solver.solve(
+        step_by_step=True, selection=SelectionMethod.MOST_CONSTRAINED
     )
     print("\n" + str(result["solved"]))
 
