@@ -1,9 +1,7 @@
 from sudoku.solver.solver import SudokuSolver, SelectionMethod
 from sudoku.game import SudokuGame
-
 import os, random, time
 from typing import Dict, Union, List
-
 from colorama import Fore
 
 
@@ -64,9 +62,10 @@ class BackTrackSolver(SudokuSolver):
         """
 
         os.system("cls" if os.name == "nt" else "clear")
-        solved = None
         if self.game is None:
             self.log("No Game To Solve")
+        elif self._is_solved == True:
+            self.log(f"{Fore.GREEN}Game Already Solved!{Fore.RESET}")
         else:
             self.log("Initializing Solver, Checking Solvability...")
             if not self._is_solvable():
@@ -78,23 +77,24 @@ class BackTrackSolver(SudokuSolver):
                     f"Game Seems Solvable, Using {selection.value} Selection. Solving..."
                 )
                 time_s = time.time()
-                solved = self._solve(
+                self.game = self._solve(
                     self.game, step_by_step=step_by_step, selection=selection
                 )
                 time_e = time.time()
                 self._time = time_e - time_s
 
-                if solved is None:
+                if self.game is None:
                     self.log(
                         f"{Fore.RED}Game is not Solvable.{Fore.RESET} Backtracking Stopped in {Fore.YELLOW}{self._time} Seconds{Fore.RESET}.{Fore.RESET}"
                     )
                 else:
+                    self._is_solved = True
                     self.log(
                         f"{Fore.GREEN}Game Solved{Fore.RESET} Using {Fore.YELLOW}{selection.value} Selection{Fore.RESET} in {Fore.YELLOW}{self._steps} Steps{Fore.RESET} and {Fore.YELLOW}{self._backtracks} Backtracks{Fore.RESET} in {Fore.YELLOW}{self._time} Seconds{Fore.RESET}!{Fore.RESET}"
                     )
 
         return {
-            "solved": solved,
+            "solved": self.game,
             "original": self.original_game,
             "time": self._time,
             "steps": self._steps,
@@ -121,9 +121,9 @@ class BackTrackSolver(SudokuSolver):
             g_cpy.constants = self.original_game.constants
             if step_by_step:
                 os.system("cls" if os.name == "nt" else "clear")
-                print(g_cpy)
+                print(game)
                 print(f"\nSteps: {self._steps} | Backtracks: {self._backtracks}\n\n")
-            self.solve_history.append(g_cpy)
+            self.solve_history.append(game)
             s = self._solve(g_cpy, step_by_step=step_by_step, selection=selection)
             if s is not None:
                 return s

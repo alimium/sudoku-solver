@@ -1,9 +1,7 @@
 from sudoku.game.sudoku import SudokuGame
 from typing import List, Dict
-
 import copy
 from enum import Enum
-
 from colorama import Fore
 
 
@@ -21,6 +19,7 @@ class SudokuSolver:
         self.original_game: SudokuGame = game
         self.game: SudokuGame = copy.deepcopy(self.original_game)
         self.solve_history: List[SudokuGame] = [self.original_game]
+        self._is_solved: bool = False
         self._log: bool = log
         self._steps: int = 0
         self._time: int = 0

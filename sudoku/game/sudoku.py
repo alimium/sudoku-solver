@@ -1,6 +1,5 @@
 from typing import List, Tuple, Union, Dict
 import math
-
 import numpy as np
 import PySimpleGUI as sg
 from colorama import Fore

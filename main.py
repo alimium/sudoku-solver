@@ -1,8 +1,6 @@
 from sudoku.solver import BackTrackSolver, SelectionMethod
-from sudoku import SudokuGame
-
+from sudoku import SudokuSamples, SudokuGame
 import os
-
 import numpy as np
 from colorama import Fore
 
@@ -23,46 +21,18 @@ def parse_input():
 
 
 def main():
-    arto_inkala = np.array(
-        [
-            [8, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 3, 6, 0, 0, 0, 0, 0],
-            [0, 7, 0, 0, 9, 0, 2, 0, 0],
-            [0, 5, 0, 0, 0, 7, 0, 0, 0],
-            [0, 0, 0, 0, 4, 5, 7, 0, 0],
-            [0, 0, 0, 1, 0, 0, 0, 3, 0],
-            [0, 0, 1, 0, 0, 0, 0, 6, 8],
-            [0, 0, 8, 5, 0, 0, 0, 1, 0],
-            [0, 9, 0, 0, 0, 0, 4, 0, 0],
-        ]
-    )
 
-    david_filmer = np.array(
-        [
-            [0, 0, 9, 0, 0, 0, 1, 0, 0],
-            [0, 0, 0, 0, 0, 6, 0, 3, 0],
-            [0, 0, 0, 8, 0, 0, 0, 0, 2],
-            [0, 8, 0, 0, 0, 4, 0, 0, 0],
-            [0, 0, 0, 0, 7, 0, 5, 0, 0],
-            [6, 0, 0, 9, 0, 0, 0, 0, 0],
-            [0, 0, 7, 0, 1, 0, 9, 0, 0],
-            [0, 4, 0, 0, 0, 3, 0, 0, 8],
-            [0, 0, 0, 2, 0, 0, 0, 6, 0],
-        ]
-    )
-
-    sdk = david_filmer
+    sdk = SudokuSamples.arto_inkala
 
     # uncomment next line for custom input
     # sdk = parse_input()
 
     game = SudokuGame(sdk)
-    bt_solver = BackTrackSolver(game)
-    # gt_solver = GeneticSolver(game)
-    result = bt_solver.solve(
-        step_by_step=True, selection=SelectionMethod.MOST_CONSTRAINED
-    )
-    print("\n" + str(result["solved"]))
+    solver = BackTrackSolver(game)
+    result = solver.solve(step_by_step=True, selection=SelectionMethod.MOST_CONSTRAINED)
+    # solver.display_step_by_step(manual=True)
+    # print("\n" + str(result["solved"]))
+    # result["solved"].draw()
 
 
 if __name__ == "__main__":
