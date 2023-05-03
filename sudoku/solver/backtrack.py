@@ -20,7 +20,7 @@ class BackTrackSolver(SudokuSolver):
         super().__init__(game, log)
 
     def solve(
-        self, step_by_step=False, selection=SelectionMethod.ROW
+        self, reset_solver=True, step_by_step=False, selection=SelectionMethod.ROW
     ) -> Dict[str, Union[SudokuGame, List[SudokuGame], int, int, int]]:
         """
         Solves the game by backtracking algorithm. At each step, the algorithm will choose a number within valid possibilities for that cell.
@@ -62,6 +62,9 @@ class BackTrackSolver(SudokuSolver):
         """
 
         os.system("cls" if os.name == "nt" else "clear")
+
+        if reset_solver:
+            self._reset_solver()
         if self.game is None:
             self.log("No Game To Solve")
         elif self._is_solved == True:

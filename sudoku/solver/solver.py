@@ -17,7 +17,7 @@ class SelectionMethod(Enum):
 class SudokuSolver:
     def __init__(self, game: SudokuGame = None, log=True) -> None:
         self.original_game: SudokuGame = game
-        self.game: SudokuGame = copy.deepcopy(self.original_game)
+        self.game: SudokuGame = SudokuGame(self.original_game.array_board)
         self.solve_history: List[SudokuGame] = [self.original_game]
         self._is_solved: bool = False
         self._log: bool = log
@@ -30,6 +30,14 @@ class SudokuSolver:
             print(
                 f"{Fore.YELLOW} ------> {Fore.RESET}SOLVER [{Fore.YELLOW}{self.__class__.__name__}{Fore.RESET}] |\t{msg}"
             )
+
+    def _reset_solver(self):
+        self.game: SudokuGame = SudokuGame(self.original_game.array_board)
+        self.solve_history: List[SudokuGame] = [self.original_game]
+        self._is_solved: bool = False
+        self._steps: int = 0
+        self._time: int = 0
+        self._backtracks: int = 0
 
     def _game_is_valid(self, game, row: int, col: int, num: int) -> bool:
         game.array_board[row, col] = num
