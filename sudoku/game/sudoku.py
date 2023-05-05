@@ -79,13 +79,12 @@ class SudokuGame:
 
     def draw(self) -> None:
         """
-        Draw the Sudoku board using PySimpleGUI
+        Draw the Sudoku board using PySimpleGUI - (Code partially by ChatGPT)
         """
-        # 0 represents an empty cell
         # get the size of the board
         board = self.array_board
         n = self.size
-        # create a Graph element with a canvas size of 400x400 pixels and a graph coordinate system of 0 to n
+        # create a Graph element with a dynamic canvas size
         graph = sg.Graph(
             canvas_size=(int(math.sqrt(n) * 120), int(math.sqrt(n) * 120))
             if n <= 25
@@ -108,7 +107,7 @@ class SudokuGame:
                     text = " "
                 else:
                     text = str(board[i, j])
-                # draw a text element at the center of the cell with a font size of 18
+                # draw a text element at the center of the cell
                 graph.draw_text(
                     text,
                     (j + 0.5, n - i - 0.5),
@@ -118,9 +117,9 @@ class SudokuGame:
         # loop through each line position
         for i in range(n + 1):
             width = 5 if (i % self.grid_size) == 0 else 1
-            # draw a horizontal line across the canvas with a width of 2 pixels
+            # draw a horizontal line across the canvas
             graph.draw_line((0, i), (n, i), width=width)
-            # draw a vertical line across the canvas with a width of 2 pixels
+            # draw a vertical line across the canvas
             graph.draw_line((i, 0), (i, n), width=width)
         # read the window events and values until closed
         while True:
