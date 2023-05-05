@@ -22,17 +22,20 @@ def parse_input():
 
 def main():
 
-    sdk = SudokuSamples.arto_inkala
+    sdk = SudokuSamples.arto_inkala_9
 
     # uncomment next line for custom input
     # sdk = parse_input()
 
     game = SudokuGame(sdk)
     solver = BackTrackSolver(game)
-    result = solver.solve(step_by_step=True, selection=SelectionMethod.MOST_CONSTRAINED)
-    # solver.display_step_by_step(manual=True)
-    # print("\n" + str(result["solved"]))
-    # result["solved"].draw()
+    result = solver.solve(
+        step_by_step=False, selection=SelectionMethod.MOST_CONSTRAINED
+    )
+
+    # solver.display_step_by_step(manual=True) # uncomment this line to see the steps of the solver
+    # print("\n" + str(result["solved"])) # uncomment this line to see the solved sudoku
+    # result["solved"].draw() # uncomment this line to see the solved sudoku in a GUI window
 
 
 if __name__ == "__main__":

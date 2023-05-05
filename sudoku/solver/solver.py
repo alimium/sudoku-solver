@@ -23,7 +23,6 @@ class SudokuSolver:
         self._log: bool = log
         self._steps: int = 0
         self._time: int = 0
-        self._backtracks: int = 0
 
     def log(self, msg: str) -> None:
         if self._log:

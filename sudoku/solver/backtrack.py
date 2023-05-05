@@ -18,6 +18,7 @@ class BackTrackSolver(SudokuSolver):
             Whether to log the solver steps, by default True
         """
         super().__init__(game, log)
+        self._backtracks: int = 0
 
     def solve(
         self, reset_solver=True, step_by_step=False, selection=SelectionMethod.ROW
