@@ -36,4 +36,19 @@ This module provides the `SudokuGame` class. This class is a general implementat
 - `SudokuGame.possible_values` method returns possible numbers that can be placed on a certain cell.
 - `SudokuGame.draw` method draws the current state of the game in a graphical manner.
 
-> There are a few more utility methods available to help you with your implementation of the game. This package provides all necessary tools to implement GUI and AR versions of the game. For more information, please check out the docstrings and comments.
+There are a few more utility methods available to help you with your implementation of the game. This package provides all necessary tools to implement your own GUI and AR versions. For more information, please check out the docstrings and comments.
+
+## Sudoku Solver
+I have also implemented a simple [backtracking algorithm](https://en.wikipedia.org/wiki/Backtracking) to solve sudoku games. The algorithm can be improved by employing Minimum Remaining Value (MRV) enhancements on top of the core solver. First, you can use the solver as follows:
+```python
+from sudoku.solver import BackTrackSolver # core backtrack solver
+from sudoku.solver import SelectionMethod as sm # solver options
+
+solver = BackTrackSolver(game=some_SudokuGame_object)
+reults = solver.solve(step_by_step=True, # this prints the steps as the
+                                         # algorithm tries to solve the game
+                      selection=sm.MOST_CONSTRAINED # how to select the next
+                                                    # candidate cell in backtracking stack
+                      )
+```
+
