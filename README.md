@@ -52,3 +52,20 @@ reults = solver.solve(step_by_step=True, # this prints the steps as the
                       )
 ```
 
+The solver checks whether the game is solvable. If true, it will solve the game and return a dictionary containing the solved instance of the game, the original instance, time, number of total steps and number of backtracks taken to solve the game. There are a few utility methods provided by the backtrack solver as well to reproduce the steps, go forward/backward in the solver stack etc. which you can check out.
+
+### `sudoku.solver.solver.SelectionMethod`
+This `Enum` class provides some options for solver's selection method. This includes:
+- `SelectionMethod.ROW`: Ordered from left-to-right, top-to-bottom
+- `SelectionMethod.COLUMN`: Ordered from top-to-bottom, left-to-right
+- `SelectionMethod.GRID`: Ordered first on grids (ltr, ttb) then the same as `SelectionMethod.ROW` within each grid
+- `SelectionMethod.RANDOM`: Randomly selects the next cell to fill
+- `SelectionMethod.LEAST_CONSTRAINED`: Cells that have more possible values to fill in have more priority. If two cells have the same number of possible values, ltr ttb order is used/.
+- `SelectionMethod.MOST_CONSTRAINED`: Same as `SelectionMethod.LEAST_CONSTRAINED` but cells that have the least number of possible values are prioritized.
+
+The solver is also able to continue a partially solved sudoku puzzle by setting `reset_solver=False` when calling `BackTrackSolver.solve` method.
+
+You can learn more about how the backtrack solver works by checking out the docstrings and comments.
+
+### `sudoku.solver.solver.genetic`
+This module is a work in progress and implements a sudoku solver based on [genetic algorithms](https://en.wikipedia.org/wiki/Genetic_algorithm).
